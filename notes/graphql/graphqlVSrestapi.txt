@@ -1,0 +1,151 @@
+graphQL:
+GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. GraphQL provides a complete and understandable description of the data in your API, gives clients the power to ask for exactly what they need and nothing more, makes it easier to evolve APIs over time, and enables powerful developer tools.
+
+# graphQL vs RESTAPi
+
+1.Resources
+
+The core idea of REST is the resource. each resource is identified by a URL, and we retrieve that resource by sending a GET request to that URL.
+
+GET /book/1
+{
+  "title": "Black Hole Blues",
+  "author": { 
+    "firstName": "Janna",
+    "lastName": "Levin"
+  }
+  // ... more fields here
+}
+
+GraphQL is quite different in this respect, because in GraphQL these two concepts are completely separate
+
+in our schema we might have two book and author types
+
+type Book {
+  id: ID
+  title: String
+  published: Date
+  price: String
+  author: Author
+}
+
+type Author {
+  id: ID
+  firstName: String
+  lastName: String
+  books: [Book]
+}
+
+To be able to actually access a particular book or author, we need to create a Query type in our schema
+type Query {
+  book(id: ID!): Book
+  author(id: ID!): Author
+}
+
+query data client side
+
+GET /graphql?query={ book(id: "1") { title, author { firstName } } }
+
+query{
+  book(id:"1"){
+    name
+    author{
+      firstName
+    }
+  }
+}
+
+
+{
+  "title": "Black Hole Blues",
+  "author": { 
+    "firstName": "Janna",
+  }
+}
+
+2.url route vs graphql schema
+ REST APIs, the API is usually described as a list of endpoints
+  GET /books/:id
+  GET /authors/:id
+  GET /books/:id/comments
+  POST /books/:id/comments
+
+
+In GraphQL,we don’t use URLs to identify what is available in the API. Instead, we use a GraphQL schema
+
+type Query {
+  book(id: ID!): Book
+  author(id: ID!): Author
+}
+
+type Mutation {
+  addComment(input: AddCommentInput): Comment
+}
+
+type Book { ... }
+type Author { ... }
+type Comment { ... }
+input AddCommentInput { ... }
+
+similaraties
+  The list of endpoints in a REST API is similar to the list of fields on the Query and Mutation types in a GraphQL API. They are both the entry points into the data.
+
+  Both have a way to differentiate if an API request is meant to read data or write it
+
+difference
+  In GraphQL, you can traverse from the entry point to related data, following relationships defined in the schema, in a single request.
+  In REST, we have to call multiple endpoints to fetch related resources
+
+  In REST, you specify a write by changing the HTTP verb from GET to something else like POST
+  In GraphQL, you change a keyword in the query
+
+3. route hanlders and resolvers
+rest api route handler
+app.get("/",(req,res)=>{
+    res.send("router hanlde get request")
+})
+
+graphql resolvers
+const resolvers={
+    Query:{
+        message:()=>{
+            return "resolver"
+        }
+    }
+}
+nested resolver
+const resolver=
+{
+    Query:{
+        Authors:(root,{id})=>find(authors,{id})
+    }
+    Author:{
+        posts:()=>filter(posts,{authorid:Authors.id})
+    }
+}
+
+client query
+{
+query{
+    author(id:"1"){
+        title
+        posts{
+            title
+        }
+    }
+}
+}
+
+similaraties
+  endpoints in REST and fields in GraphQL both end up calling functions on the server
+
+  Both REST and GraphQL usually rely on frameworks and libraries to handle the nitty-gritty networking boilerplate
+
+difference
+  In REST, each request usually calls exactly one route handler function
+  In GraphQL, one query can call many resolvers to construct a nested response with multiple resources
+
+  In REST, we construct the shape of the response ourself
+  In GraphQL, the shape of the response is built up by the GraphQL execution library to match the shape of the query
+
+  

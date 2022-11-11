@@ -1,0 +1,4 @@
+nestjs and graphql 
+for express and apollo
+
+>npm i @nestjs/graphql @nestjs/apollo graphql apollo-server-express

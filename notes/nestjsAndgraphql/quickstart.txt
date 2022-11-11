@@ -1,0 +1,5 @@
+Nest offers two ways of building GraphQL applications
+1.code first and
+
+2.schema first methods
+
