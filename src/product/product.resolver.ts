@@ -10,5 +10,7 @@ export class ProductResolver {
   async products() {
     return await this.productService.getAll();
   }
-  async product(@Args('id') id: string) {}
+  async product(@Args('id') id: string) {
+    return await this.productService.findById(id);
+  }
 }
