@@ -14,6 +14,7 @@ export class ProductService {
   }
 
   async findById(id: string) {
+    console.log(id);
     const product = this.productRepository.findOne({ where: { id } });
     if (product) {
       return product;
@@ -33,6 +34,7 @@ export class ProductService {
   }
 
   async removeProduct(id: string) {
-    return await this.productRepository.delete({ id });
+    const res = await this.productRepository.delete({ id });
+    return 'product remov';
   }
 }

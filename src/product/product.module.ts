@@ -8,7 +8,6 @@ import { ProductService } from './product.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(),
     TypeOrmModule.forFeature([ProductEntity]),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

@@ -18,7 +18,7 @@ type Mutation {
     price: Int!
     isInStock: Boolean
     image: String
-  ): Product
+  ): product
   updateProduct(
     id: ID!
     productName: String!
@@ -26,6 +26,6 @@ type Mutation {
     price: Int!
     isInStock: Boolean
     image: String
-  ): Product
-  deleteProduct(id: ID!): Product
+  ): product
+  deleteProduct(id: ID!): String!
 }
