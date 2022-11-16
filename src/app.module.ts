@@ -5,6 +5,12 @@ import { AppService } from './app.service';
 import { Product } from './product/product.entity';
 import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
+import { AdminshopperModule } from './adminshopper/adminshopper.module';
+import { AdminShopper } from './adminshopper/adminshopper.entity';
+import { Address } from './user/address.entity';
+import { User } from './user/user.entity';
+import { ProductCategory } from './product/productcategory.entity';
+import { ProductReview } from './product/product-review.entity';
 const dotenv = require('dotenv');
 dotenv.config();
 @Module({
@@ -17,10 +23,18 @@ dotenv.config();
       username: 'root',
       password: 'Creole@123',
       database: 'nestjsrevis',
-      entities: [Product],
+      entities: [
+        Product,
+        AdminShopper,
+        Address,
+        User,
+        ProductCategory,
+        ProductReview,
+      ],
       synchronize: true,
     }),
     UserModule,
+    AdminshopperModule,
   ],
   controllers: [AppController],
   providers: [AppService],

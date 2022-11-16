@@ -1,5 +1,14 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
-class Address {
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from './user.entity';
+
+@Entity()
+export class Address {
   @PrimaryGeneratedColumn()
   id: string;
 
@@ -16,4 +25,7 @@ class Address {
 
   @Column({ type: 'enum', enum: ['Home', 'Ofice'] })
   addressType: ['Home', 'Ofice'];
+  @ManyToOne((type) => User, (user) => user.id)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }
