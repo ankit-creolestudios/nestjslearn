@@ -37,15 +37,20 @@ export class Product {
   @Column()
   quantity: number;
 
-  @ManyToOne((type) => AdminShopper, (admin) => admin.id)
-  @JoinColumn({ name: 'admishopper_id' })
-  adminShopper: AdminShopper;
+  @Column({ default: 0 })
+  rating: number;
 
-  @ManyToOne((type) => ProductCategory, (category) => category.categoryId, {
+  @ManyToOne((type) => AdminShopper, (admin) => admin.products, {
     cascade: ['insert', 'update'],
   })
-  @JoinColumn({ name: 'category_id' })
+  adminShopper: AdminShopper;
+
+  @ManyToOne((type) => ProductCategory, (category) => category.products, {
+    cascade: ['insert', 'update'],
+  })
   category: ProductCategory;
-  @OneToMany((type) => ProductReview, (review) => review.product)
+  @OneToMany((type) => ProductReview, (review) => review.product, {
+    cascade: ['insert', 'update'],
+  })
   productReview: ProductReview[];
 }

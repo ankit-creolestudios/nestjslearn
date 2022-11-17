@@ -25,7 +25,7 @@ export class Address {
 
   @Column({ type: 'enum', enum: ['Home', 'Ofice'] })
   addressType: ['Home', 'Ofice'];
-  @ManyToOne((type) => User, (user) => user.id)
-  @JoinColumn({ name: 'user_id' })
+
+  @ManyToOne((type) => User, (user) => user.address)
   user: User;
 }

@@ -31,6 +31,6 @@ export class AdminShopper {
   deletedAt: Date;
   @OneToMany((type) => Address, (address) => address.id)
   address: Address[];
-  @OneToMany((type) => Product, (product) => product.id)
+  @OneToMany((type) => Product, (product) => product.adminShopper)
   products: Product[];
 }
